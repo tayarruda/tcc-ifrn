@@ -1,7 +1,10 @@
 package ifrn.nc.paee;
 
+import ifrn.nc.paee.util.CarregadorDePropriedades;
+
 public class Teste {
     public static void main(String[] args){
-      System.out.println("Oie GitHub!!!");
+
+    	new CarregadorDePropriedades(null).printValues();
     }
 }
