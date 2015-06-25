@@ -1,10 +1,10 @@
 package ifrn.nc.paee;
 
-import ifrn.nc.paee.util.CarregadorDePropriedades;
+import ifrn.nc.paee.util.PropriedadesUtil;
 
 public class Teste {
     public static void main(String[] args){
 
-    	new CarregadorDePropriedades(null).printValues();
+    	new PropriedadesUtil().printExperimentos();
     }
 }

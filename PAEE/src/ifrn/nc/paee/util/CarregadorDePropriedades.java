@@ -9,14 +9,14 @@ import java.util.Properties;
  * 
  * @author taynarruda
  */
-public class CarregadorDePropriedades {
+class CarregadorDePropriedades {
 
-	private Properties props = new Properties();
+	private  Properties props = new Properties();
 	private String nomeDoArquivo = "/experimentos.properties";
 	
 	/**
 	 * 
-	 * @param nomeDoArquivo este parametro È para lbal caso n„o seja necessa blblb 
+	 * @param nomeDoArquivo este parametro para lbal caso n√£o seja necessa blblb 
 	 */
 	public CarregadorDePropriedades(String nomeDoArquivo){
 		
@@ -29,9 +29,13 @@ public class CarregadorDePropriedades {
 		try {
 			props.load(input);
 		} catch (IOException e) {
-			// TODO Temos que analisar como ser· o tratamento de excetpiions
+			// TODO Temos que analisar como ser√£o tratamento de excetpiions
 			e.printStackTrace();
 		}
+	}
+	
+	public String getValor(String chave){
+		return props.getProperty(chave);
 	}
 	
 	public void printValues(){
