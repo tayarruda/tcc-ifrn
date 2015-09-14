@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class FabricaDeConexao {
+class FabricaDeConexao {
 	private String driverClassName = "org.hsqldb.jdbcDriver";//carregando o driver
 	private String url = "jdbc:hsqldb:file:C:\\Users\\taynarruda\\Downloads\\hsqldb-2.3.3\\hsqldb-2.3.3\\hsqldb\\data\\PAEE.tmp";
 	private String usuario = "sa";
