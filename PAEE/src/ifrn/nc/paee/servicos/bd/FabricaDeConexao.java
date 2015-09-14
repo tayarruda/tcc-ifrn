@@ -5,8 +5,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 class FabricaDeConexao {
-	private String driverClassName = "org.hsqldb.jdbcDriver";//carregando o driver
-	private String url = "jdbc:hsqldb:file:C:\\Users\\taynarruda\\Downloads\\hsqldb-2.3.3\\hsqldb-2.3.3\\hsqldb\\data\\PAEE.tmp";
+	private String driverClassName = "org.hsqldb.jdbcDriver";
+	private String url = "jdbc:hsqldb:file:C:\\Users\\Laura Raquel\\git\\tcc-ifrn\\PAEE\\bd\\PAEE";
 	private String usuario = "sa";
 	private String senha = "";
 
@@ -24,7 +24,7 @@ class FabricaDeConexao {
 
 	public Connection getConnection() throws SQLException {
 		Connection conn = null;
-		conn = DriverManager.getConnection(url, usuario, senha);//faz a conexão com o banco;
+		conn = DriverManager.getConnection(url, usuario, senha);
 		return conn;
 	}
 
@@ -36,7 +36,7 @@ class FabricaDeConexao {
 	}
 
 	public static void main(String[] args) throws SQLException {
-		FabricaDeConexao.getInstance().getConnection();//instanciando
+		FabricaDeConexao.getInstance().getConnection();
 		System.out.println("Conectou!");
 	}
 }

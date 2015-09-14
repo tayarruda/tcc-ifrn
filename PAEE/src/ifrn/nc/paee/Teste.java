@@ -30,10 +30,7 @@ public class Teste {
 		try {
 			bd.inicializacao(new Experimento("Fabio", campos));
 		} catch (InicializacaoBDException e) {
-			// finaliza a aplicação
-			
-			
-			
+			e.printStackTrace();
 			
 		}
     }
