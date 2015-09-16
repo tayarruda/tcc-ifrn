@@ -3,6 +3,7 @@ package ifrn.nc.paee.servicos.bd;
 
 public class Experimento {
 
+	private int id;
 	private String nome;
 	private Campo[] campos;
 	
@@ -26,6 +27,14 @@ public class Experimento {
 
 	public void setCampos(Campo[] campos) {
 		this.campos = campos;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	

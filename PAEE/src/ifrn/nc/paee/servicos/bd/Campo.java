@@ -6,15 +6,15 @@ public class Campo {
 	private boolean multivalorado = false;
 
 	public Campo(String nome, String valor, boolean multivalorado) {
-		nome = this.nome;
-		valor = this.valor;
-		multivalorado = this.multivalorado;
+		this.nome = nome;
+		this.valor = valor;
+		this.multivalorado = multivalorado;
 	}
 
 	public Campo(String nome, String valor) {
-		nome = this.nome;
-		valor = this.valor;
-		multivalorado = false;
+		this.nome = nome;
+		this.valor = valor;
+		this.multivalorado = false;
 	}
 
 	public String getNome() {

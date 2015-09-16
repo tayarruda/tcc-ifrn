@@ -12,36 +12,51 @@ public class HSQLDB implements BancoDeDados {
 	public void inicializacao(Experimento experimento)
 			throws InicializacaoBDException {
 
-		Connection connection;
+		Connection connection = null;
 		try {
 			connection = FabricaDeConexao.getInstance().getConnection();
 
 			PreparedStatement pstm = connection
-					.prepareStatement("INSERT INTO experimento (nome, campos) values (?,?)");
+					.prepareStatement("INSERT INTO experimento (nome) values (?)");
 			pstm.setString(1, experimento.getNome());
 			pstm.executeUpdate();
-			
+			pstm.close();
+
 			Statement stm = connection.createStatement();
 			ResultSet rs = stm.executeQuery("CALL IDENTITY()");
-			
-			
-			for (Campo campo : experimento.getCampos()) {
+			stm.close();
 
-				pstm = connection
-						.prepareStatement("INSERT INTO campos (nome, valor, multivalorado, experimento) values (?,?,?,?)");
-				pstm.setString(1, campo.getNome());
-				pstm.setString(2, campo.getValor());
-				pstm.setBoolean(3, campo.isMultivalorado());
-				
-				pstm.executeUpdate();
+			if (rs.next()) {
+				experimento.setId(rs.getInt(1));
+
+				for (Campo campo : experimento.getCampos()) {
+
+					pstm = connection
+							.prepareStatement("INSERT INTO campos (nome, valor, multivalorado, idexp) values (?,?,?,?)");
+					pstm.setString(1, campo.getNome());
+					pstm.setString(2, campo.getValor());
+					pstm.setBoolean(3, campo.isMultivalorado());
+					pstm.setInt(4, experimento.getId());
+
+					pstm.executeUpdate();
+					pstm.close();
+				}
 			}
-
-			
+			;
 
 		} catch (SQLException e) {
-			
+
 			throw new InicializacaoBDException(e);
+		} finally {
+			try {
+				connection.close();
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
+
 	}
 
 	@Override
@@ -73,10 +88,9 @@ public class HSQLDB implements BancoDeDados {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
-	public static void main(String[] args){
-		
-		
+
+	public static void main(String[] args) {
+
 	}
 
 }
