@@ -1,36 +1,48 @@
 package ifrn.nc.paee.util;
 
+import ifrn.nc.paee.servicos.bd.Experimento;
+
 public class PropriedadesUtil {
 
 	private final String EXPERIMENTOS = "experimentos";
 	
 	private final String CHAVE_NOME = ".nome";
 	private final String CHAVE_ETAPA = ".etapa";
-	private final String CHAVE_DISCIPLINA = ".discplina";
+	private final String CHAVE_DISCIPLINA = ".disciplina";
 	private final String CHAVE_CONTEUDO = ".conteudo";
 	private final String CHAVE_CLASSE = ".classe";
 
-	private final CarregadorDePropriedades props = new CarregadorDePropriedades(null);
 	
+	private final CarregadorDePropriedades props = new CarregadorDePropriedades();
+
+	private Experimento[] experimentos = null;
 	private String[] chaves = null;
 	public PropriedadesUtil(){
-		chaves = props.getValor(EXPERIMENTOS).split(",");
+		chaves = props.getValor(EXPERIMENTOS).split(","); // nesse caso, o que  ai fazer o split ?
 	}
-	
-	public void printExperimentos(){
+		// não entendi isso
+	public Experimento[] getExperimentos(){
 		
-		for (String chave : chaves) {
+		
+		experimentos = new Experimento[chaves.length];
+        
+		for (int i = 0; i< chaves.length; i++) {
+			Experimento experimento = new Experimento();
 			
-			System.out.println("#################");
-			System.out.println("#");
-			System.out.println("# chave.nome =" + props.getValor(chave+CHAVE_NOME));
-			System.out.println("# chave.etapa =" + props.getValor(chave+CHAVE_ETAPA));
-			System.out.println("# chave.disciplina =" + props.getValor(chave+CHAVE_DISCIPLINA));
-			System.out.println("# chave.conteudo =" + props.getValor(chave+CHAVE_CONTEUDO));
-			System.out.println("# chave.classe =" + props.getValor(chave+CHAVE_CLASSE));
+			experimento.setNome(props.getValor(chaves[i]+CHAVE_NOME));
+			experimento.setEtapa(Integer.parseInt(props.getValor(chaves[i]+CHAVE_ETAPA)));
+			experimento.setConteudo(props.getValor(chaves[i]+CHAVE_CONTEUDO));
+			experimento.setDisciplina(Integer.parseInt(props.getValor(chaves[i]+CHAVE_DISCIPLINA)));
+			experimento.setClasseExecutavel(props.getValor(chaves[i]+CHAVE_CLASSE));
+			
+			experimentos[i] = experimento;
+			
+		
 		}
+		
+		return experimentos;
 	}
-	
+
 	
 	
 	
