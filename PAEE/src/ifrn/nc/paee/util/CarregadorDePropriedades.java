@@ -9,6 +9,11 @@ import java.util.Properties;
  * 
  * @author taynarruda
  */
+
+
+/* pra que serve esse carregador de propriedades? e como isso aqui vai funcionar*/
+// o que ser blblbl?
+
 class CarregadorDePropriedades {
 
 	private  Properties props = new Properties();
@@ -16,14 +21,9 @@ class CarregadorDePropriedades {
 	
 	/**
 	 * 
-	 * @param nomeDoArquivo este parametro para lbal caso não seja necessa blblb 
+	 * @param nomeDoArquivo este parametro para lbal caso não seja necessa blblb
 	 */
-	public CarregadorDePropriedades(String nomeDoArquivo){
-		
-		if(nomeDoArquivo != null &&
-				nomeDoArquivo.trim().isEmpty()){
-			this.nomeDoArquivo = nomeDoArquivo;
-		} 
+	public CarregadorDePropriedades(){
 		
 		InputStream input = CarregadorDePropriedades.class.getResourceAsStream(this.nomeDoArquivo);
 		try {
@@ -38,7 +38,4 @@ class CarregadorDePropriedades {
 		return props.getProperty(chave);
 	}
 	
-	public void printValues(){
-		props.list(System.out);
-	}
 }

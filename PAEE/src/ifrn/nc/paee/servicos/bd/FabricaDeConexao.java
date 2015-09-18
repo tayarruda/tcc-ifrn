@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 class FabricaDeConexao {
 	private String driverClassName = "org.hsqldb.jdbcDriver";
-	private String url = "jdbc:hsqldb:file:C:\\Users\\Laura Raquel\\git\\tcc-ifrn\\PAEE\\bd\\PAEE";
+	private String url = "jdbc:hsqldb:file:C:\\Users\\taynarruda\\git\\tcc-paee\\PAEE\\bd\\PAEE";
 	private String usuario = "sa";
 	private String senha = "";
 

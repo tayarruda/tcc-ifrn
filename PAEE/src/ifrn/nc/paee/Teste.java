@@ -9,13 +9,38 @@ import ifrn.nc.paee.util.PropriedadesUtil;
 
 public class Teste {
     public static void main(String[] args){
-
-    	testeMecanismoBD();
+    	
+    	
+    	testeMecanismoProp();
     }
     
     public static void testeMecanismoProp(){
-    	new PropriedadesUtil().printExperimentos();
+    	Experimento[] experimentos =   (new PropriedadesUtil()).getExperimentos();
+    	
+    	for (Experimento experimento : experimentos) {
+			testeMecanismoBD(experimento);
+		}
     }
+    
+    
+    public static void testeMecanismoBD(Experimento experimento){
+ 		BancoDeDados bd = new HSQLDB();
+
+ 		// configurar a base de dados
+
+ 		Campo massa = new Campo("massa", "0", false);
+ 		Campo temperatura = new Campo("temp", "0", true);
+
+ 		Campo[] campos = { massa, temperatura };
+ 		experimento.setCampos(campos);
+
+ 		try {
+ 			bd.inicializacao(experimento);
+ 		} catch (InicializacaoBDException e) {
+ 			e.printStackTrace();
+ 			
+ 		}
+     }
     
     public static void testeMecanismoBD(){
 		BancoDeDados bd = new HSQLDB();
