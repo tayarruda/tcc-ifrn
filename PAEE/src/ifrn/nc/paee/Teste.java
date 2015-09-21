@@ -5,44 +5,58 @@ import ifrn.nc.paee.servicos.bd.Campo;
 import ifrn.nc.paee.servicos.bd.Experimento;
 import ifrn.nc.paee.servicos.bd.HSQLDB;
 import ifrn.nc.paee.servicos.bd.InicializacaoBDException;
-import ifrn.nc.paee.util.PropriedadesUtil;
+import ifrn.nc.paee.util.CarregadorDeExperimentos;
 
 public class Teste {
-    public static void main(String[] args){
-    	
-    	
-    	testeMecanismoProp();
-    }
-    
-    public static void testeMecanismoProp(){
-    	Experimento[] experimentos =   (new PropriedadesUtil()).getExperimentos();
-    	
-    	for (Experimento experimento : experimentos) {
+	public static void main(String[] args) {
+
+		testeInterfaceGrafica();
+	}
+
+	public static void testeInterfaceGrafica() {
+
+		Experimento[] experimentos = (new CarregadorDeExperimentos())
+				.getExperimentos();
+
+		for (Experimento experimento : experimentos) {
 			testeMecanismoBD(experimento);
 		}
-    }
-    
-    
-    public static void testeMecanismoBD(Experimento experimento){
- 		BancoDeDados bd = new HSQLDB();
+		
+		//Precisar instanciar uma tela
+		//irá passar os experimentos
+		
 
- 		// configurar a base de dados
+	}
 
- 		Campo massa = new Campo("massa", "0", false);
- 		Campo temperatura = new Campo("temp", "0", true);
+	public static void testeMecanismoProp() {
+		Experimento[] experimentos = (new CarregadorDeExperimentos())
+				.getExperimentos();
 
- 		Campo[] campos = { massa, temperatura };
- 		experimento.setCampos(campos);
+		for (Experimento experimento : experimentos) {
+			testeMecanismoBD(experimento);
+		}
+	}
 
- 		try {
- 			bd.inicializacao(experimento);
- 		} catch (InicializacaoBDException e) {
- 			e.printStackTrace();
- 			
- 		}
-     }
-    
-    public static void testeMecanismoBD(){
+	public static void testeMecanismoBD(Experimento experimento) {
+		BancoDeDados bd = new HSQLDB();
+
+		// configurar a base de dados
+
+		Campo massa = new Campo("massa", "0", false);
+		Campo temperatura = new Campo("temp", "0", true);
+
+		Campo[] campos = { massa, temperatura };
+		experimento.setCampos(campos);
+
+		try {
+			bd.inicializacao(experimento);
+		} catch (InicializacaoBDException e) {
+			e.printStackTrace();
+
+		}
+	}
+
+	public static void testeMecanismoBD() {
 		BancoDeDados bd = new HSQLDB();
 
 		// configurar a base de dados
@@ -56,7 +70,7 @@ public class Teste {
 			bd.inicializacao(new Experimento("Fabio", campos));
 		} catch (InicializacaoBDException e) {
 			e.printStackTrace();
-			
+
 		}
-    }
+	}
 }
