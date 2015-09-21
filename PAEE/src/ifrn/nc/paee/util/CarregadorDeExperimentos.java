@@ -2,7 +2,7 @@ package ifrn.nc.paee.util;
 
 import ifrn.nc.paee.servicos.bd.Experimento;
 
-public class PropriedadesUtil {
+public class CarregadorDeExperimentos {
 
 	private final String EXPERIMENTOS = "experimentos";
 	
@@ -17,7 +17,7 @@ public class PropriedadesUtil {
 
 	private Experimento[] experimentos = null;
 	private String[] chaves = null;
-	public PropriedadesUtil(){
+	public CarregadorDeExperimentos(){
 		chaves = props.getValor(EXPERIMENTOS).split(","); // nesse caso, o que  ai fazer o split ?
 	}
 		// não entendi isso
