@@ -1,6 +1,13 @@
 package ifrn.nc.paee.servicos.bd;
 
 public interface BancoDeDados {
+
+	/**
+	 * TODO : Documentar ... 
+	 * 
+	 * @param experimento
+	 * @throws InicializacaoBDException
+	 */
 	public void inicializacao(Experimento experimento) throws InicializacaoBDException;
 	public boolean guardar (String campo, String valor);
 	public boolean guardar(Campo campo);
