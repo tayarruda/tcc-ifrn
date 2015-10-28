@@ -1,26 +1,18 @@
 package ifrn.nc.paee.apresentacao;
 
-import ifrn.nc.paee.Teste;
 import ifrn.nc.paee.servicos.bd.Experimento;
 import ifrn.nc.paee.util.CarregadorDeExperimentos;
 
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JPanel;
-import javax.swing.JButton;
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MaximizeAction;
-
 import java.awt.Frame;
 
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JLabel;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
-import com.sun.xml.internal.ws.wsdl.writer.document.http.Address;
-
-public class Tela_Principal {
+public class TelaPrincipal {
 
 	private JFrame frame;
 
@@ -31,7 +23,7 @@ public class Tela_Principal {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Tela_Principal window = new Tela_Principal();
+					TelaPrincipal window = new TelaPrincipal();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -43,7 +35,7 @@ public class Tela_Principal {
 	/**
 	 * Create the application.
 	 */
-	public Tela_Principal() {
+	public TelaPrincipal() {
 		initialize();
 	}
 
@@ -57,20 +49,20 @@ public class Tela_Principal {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		
-		JPanel panel_Imagem = new JPanel();
+		JPanel panelExperimentos = new JPanel();
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(294)
-					.addComponent(panel_Imagem, GroupLayout.PREFERRED_SIZE, 630, GroupLayout.PREFERRED_SIZE)
+					.addComponent(panelExperimentos, GroupLayout.PREFERRED_SIZE, 630, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(438, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(24)
-					.addComponent(panel_Imagem, GroupLayout.PREFERRED_SIZE, 443, GroupLayout.PREFERRED_SIZE)
+					.addComponent(panelExperimentos, GroupLayout.PREFERRED_SIZE, 443, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(238, Short.MAX_VALUE))
 		);
 		
@@ -80,7 +72,7 @@ public class Tela_Principal {
 				.getExperimentos();
 		for (Experimento experimento : exps) {
 			JButton btnExp = new JButton(experimento.getNome());
-			panel_Imagem.add(btnExp);
+			panelExperimentos.add(btnExp);
 			
 		}
 		
