@@ -3,6 +3,7 @@ package ifrn.nc.paee.servicos.bd;
 public class Campo {
 	private String nome = null;
 	private String valor = null;
+	private String[] valores = null;
 	private boolean multivalorado = false;
 
 	public Campo(String nome, String valor, boolean multivalorado) {

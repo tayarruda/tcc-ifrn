@@ -10,7 +10,11 @@ import ifrn.nc.paee.util.CarregadorDeExperimentos;
 public class Teste {
 	public static void main(String[] args) {
 
-		testeInterfaceGrafica();
+		
+		testeMecanismoBD();
+		
+		
+		
 	}
 
 	public static void testeInterfaceGrafica() {
@@ -67,7 +71,11 @@ public class Teste {
 		Campo[] campos = { massa, temperatura };
 
 		try {
-			bd.inicializacao(new Experimento("Fabio", campos));
+			bd.inicializacao(new Experimento("Laura DB 6", campos));
+			
+			// atualizar 
+			System.out.println(bd.guardar("Laura DB 6", new Campo("massa", "15")));
+			
 		} catch (InicializacaoBDException e) {
 			e.printStackTrace();
 

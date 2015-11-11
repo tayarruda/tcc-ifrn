@@ -9,10 +9,8 @@ public interface BancoDeDados {
 	 * @throws InicializacaoBDException
 	 */
 	public void inicializacao(Experimento experimento) throws InicializacaoBDException;
-	public boolean guardar (String campo, String valor);
-	public boolean guardar(Campo campo);
-	public String[] recuperar(String campo);
-	public Campo[] recuperar(Campo campo);
+	public boolean guardar(String nomeDoExperimento, Campo campo);
+	public Campo recuperar(String nomeDoExperimento, Campo campo);
 	public boolean termino();
 
 }

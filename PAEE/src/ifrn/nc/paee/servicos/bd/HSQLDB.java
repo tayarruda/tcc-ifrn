@@ -50,7 +50,7 @@ public class HSQLDB implements BancoDeDados {
 		} finally {
 			try {
 				connection.close();
-				
+
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -60,37 +60,54 @@ public class HSQLDB implements BancoDeDados {
 	}
 
 	@Override
-	public boolean guardar(String campo, String valor) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean guardar(Campo campo) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public String[] recuperar(String campo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Campo[] recuperar(Campo campo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public boolean termino() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	public static void main(String[] args) {
+	@Override
+	public boolean guardar(String nomeDoExperimento, Campo campo) {
+		// 1. pega a conexão
+		Connection conn = null;
+		try {
+			conn = FabricaDeConexao.getInstance().getConnection();
+			// 2. prepara a instrução (update)
 
+			PreparedStatement pstm = conn
+					.prepareStatement("UPDATE campos SET valor = ? WHERE campos.nome = ? and campos.idexp = (SELECT id FROM experimento WHERE nome = ?)"); 
+			// adicionar no nome do experimento o UNIQUE
+			// não pode existir, dentro do mesmo experimento, campos com o mesmo nome. (regra de negócio)
+			
+			pstm.setString(1, campo.getValor());
+			pstm.setString(2, campo.getNome() );
+			pstm.setString(3, nomeDoExperimento);
+
+			
+			pstm.executeUpdate();
+			// 3. fechar e retornar true caso verdade.
+			
+			pstm.close();
+			//por algum motivo, como não estávamos fechando a conexão .. a atualização não era submetida.
+			conn.close();
+			return true;
+		} catch (SQLException e) {
+		
+			e.printStackTrace();
+			return false;
+
+		}finally{
+		}
+
+		
+	}
+
+	@Override
+	public Campo recuperar(String nomeDoExperimento, Campo campo) {
+		// 1. pegar a conexao
+		// 2. prepara a instruçao (select)
+		// 2.1. é multivalorado?
+		// 3. cria um novo Campo e retornar
+		return null;
 	}
 
 }
