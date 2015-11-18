@@ -1,5 +1,8 @@
 package ifrn.nc.paee.servicos.bd;
 
+import ifrn.nc.paee.dominio.Campo;
+import ifrn.nc.paee.dominio.Experimento;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,6 +15,11 @@ public class HSQLDB implements BancoDeDados {
 	public void inicializacao(Experimento experimento)
 			throws InicializacaoBDException {
 
+		/* TODO 
+		 * 1 - Especificar no banco que o nome do experimento é UNIQUE
+		 * 2 - Só inserir os experimento que não estejam registrados no banco
+		 * 3 - [regra de negócio] O experimento só pode ter campos com nomes distintos, implemengtar classe Experimento.
+		 */
 		Connection connection = null;
 		try {
 			connection = FabricaDeConexao.getInstance().getConnection();
@@ -61,7 +69,7 @@ public class HSQLDB implements BancoDeDados {
 
 	@Override
 	public boolean termino() {
-		// TODO Auto-generated method stub
+		// TODO Repensar 
 		return false;
 	}
 
@@ -75,8 +83,6 @@ public class HSQLDB implements BancoDeDados {
 
 			PreparedStatement pstm = conn
 					.prepareStatement("UPDATE campos SET valor = ? WHERE campos.nome = ? and campos.idexp = (SELECT id FROM experimento WHERE nome = ?)"); 
-			// adicionar no nome do experimento o UNIQUE
-			// não pode existir, dentro do mesmo experimento, campos com o mesmo nome. (regra de negócio)
 			
 			pstm.setString(1, campo.getValor());
 			pstm.setString(2, campo.getNome() );
@@ -87,8 +93,8 @@ public class HSQLDB implements BancoDeDados {
 			// 3. fechar e retornar true caso verdade.
 			
 			pstm.close();
-			//por algum motivo, como não estávamos fechando a conexão .. a atualização não era submetida.
 			conn.close();
+			
 			return true;
 		} catch (SQLException e) {
 		
@@ -104,10 +110,35 @@ public class HSQLDB implements BancoDeDados {
 	@Override
 	public Campo recuperar(String nomeDoExperimento, Campo campo) {
 		// 1. pegar a conexao
-		// 2. prepara a instruçao (select)
-		// 2.1. é multivalorado?
-		// 3. cria um novo Campo e retornar
-		return null;
+		Connection conn = null;
+		Campo campoAtualizado = null;
+		
+		try {
+			conn = FabricaDeConexao.getInstance().getConnection();
+			// 2. prepara a instruçao (select)
+			PreparedStatement pstm = conn.prepareStatement("SELECT valor FROM campos INNER JOIN experimento ON experimento.id = campos.idexp");
+			ResultSet rs = pstm.executeQuery();
+			
+			// TODO Verificar se é multivalorado 
+			
+			if(rs.next()){
+				String valor = rs.getString(1);
+				campoAtualizado = new Campo(campo.getNome(), valor);
+			}
+			
+			// 3. cria um novo Campo e retornar
+			
+			rs.close();
+			pstm.close();
+			conn.close();
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			
+			e.printStackTrace();
+		}
+		return campoAtualizado;
 	}
 
 }

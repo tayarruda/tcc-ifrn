@@ -1,5 +1,8 @@
 package ifrn.nc.paee.servicos.bd;
 
+import ifrn.nc.paee.dominio.Campo;
+import ifrn.nc.paee.dominio.Experimento;
+
 public interface BancoDeDados {
 
 	/**
