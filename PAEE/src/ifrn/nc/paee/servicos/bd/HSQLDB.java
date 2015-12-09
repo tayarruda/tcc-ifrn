@@ -13,59 +13,32 @@ public class HSQLDB implements BancoDeDados {
 
 	@Override
 	public void inicializacao(Experimento experimento)
-			throws InicializacaoBDException {
+			throws  ExperimentoValidoException, ConexaoException, InicializacaoBDException {
+		
+		if(experimento == null || !experimento.aptoParaInicializacao()){
+			throw new ExperimentoValidoException(experimento);
+		}
 
 		/* TODO 
 		 * 1 - Especificar no banco que o nome do experimento é UNIQUE
-		 * 2 - Só inserir os experimento que não estejam registrados no banco
-		 * 3 - [regra de negócio] O experimento só pode ter campos com nomes distintos, implemengtar classe Experimento.
 		 */
-		Connection connection = null;
-		try {
-			connection = FabricaDeConexao.getInstance().getConnection();
-
-			PreparedStatement pstm = connection
-					.prepareStatement("INSERT INTO experimento (nome) values (?)");
-			pstm.setString(1, experimento.getNome());
-			pstm.executeUpdate();
-			pstm.close();
-
-			Statement stm = connection.createStatement();
-			ResultSet rs = stm.executeQuery("CALL IDENTITY()");
-			stm.close();
-
-			if (rs.next()) {
-				experimento.setId(rs.getInt(1));
-
-				for (Campo campo : experimento.getCampos()) {
-
-					pstm = connection
-							.prepareStatement("INSERT INTO campos (nome, valor, multivalorado, idexp) values (?,?,?,?)");
-					pstm.setString(1, campo.getNome());
-					pstm.setString(2, campo.getValor());
-					pstm.setBoolean(3, campo.isMultivalorado());
-					pstm.setInt(4, experimento.getId());
-
-					pstm.executeUpdate();
-					pstm.close();
-				}
-			}
-			;
-
-		} catch (SQLException e) {
-
-			throw new InicializacaoBDException(e);
-		} finally {
+		Connection connection = FabricaDeConexao.getInstance().getConnection();
+		
+		
+		inserirExperimento(experimento, connection);
+		
+		
+		inserirCampos(experimento, connection);
+		
 			try {
 				connection.close();
-
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
+				//TODO imprimir o erro .... não silenciar. 
 				e.printStackTrace();
-			}
-		}
+			}	
 
 	}
+
 
 	@Override
 	public boolean termino() {
@@ -74,11 +47,11 @@ public class HSQLDB implements BancoDeDados {
 	}
 
 	@Override
-	public boolean guardar(String nomeDoExperimento, Campo campo) {
+	public boolean guardar(String nomeDoExperimento, Campo campo) throws ConexaoException{
 		// 1. pega a conexão
-		Connection conn = null;
+		Connection conn = FabricaDeConexao.getInstance().getConnection();
 		try {
-			conn = FabricaDeConexao.getInstance().getConnection();
+
 			// 2. prepara a instrução (update)
 
 			PreparedStatement pstm = conn
@@ -108,7 +81,7 @@ public class HSQLDB implements BancoDeDados {
 	}
 
 	@Override
-	public Campo recuperar(String nomeDoExperimento, Campo campo) {
+	public Campo recuperar(String nomeDoExperimento, Campo campo) throws ConexaoException {
 		// 1. pegar a conexao
 		Connection conn = null;
 		Campo campoAtualizado = null;
@@ -140,5 +113,51 @@ public class HSQLDB implements BancoDeDados {
 		}
 		return campoAtualizado;
 	}
+	
+	private void inserirExperimento(Experimento experimento,
+			Connection connection) throws InicializacaoBDException {
+		
+		try{
+			PreparedStatement pstm = connection
+					.prepareStatement("INSERT INTO experimento (nome) values (?)");
+			pstm.setString(1, experimento.getNome());
+			pstm.executeUpdate();
+			pstm.close(); 
+	
+			Statement stm = connection.createStatement();
+			ResultSet rs = stm.executeQuery("CALL IDENTITY()");
+			stm.close();
+			
+			if (rs.next()) {
+				experimento.setId(rs.getInt(1));				
+			}
+		}catch(SQLException sqle){
+			throw new InicializacaoBDException("Nome do Experimento inválido - já existe!!", sqle);
+		}
+	}
+
+	private void inserirCampos(Experimento experimento, Connection connection) {
+		
+		try{
+		 PreparedStatement pstm;
+		
+			for (Campo campo : experimento.getCampos()) {
+
+				pstm = connection
+						.prepareStatement("INSERT INTO campos (nome, valor, multivalorado, idexp) values (?,?,?,?)");
+				pstm.setString(1, campo.getNome());
+				pstm.setString(2, campo.getValor());
+				pstm.setBoolean(3, campo.isMultivalorado());
+				pstm.setInt(4, experimento.getId());
+
+				pstm.executeUpdate();
+				pstm.close();
+			}
+			
+		}catch(SQLException sqle){
+			System.out.println(sqle.getMessage());
+		}
+	}
+
 
 }

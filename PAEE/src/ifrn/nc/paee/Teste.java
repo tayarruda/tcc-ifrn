@@ -1,8 +1,8 @@
 package ifrn.nc.paee;
 
+import ifrn.nc.paee.dominio.Campo;
+import ifrn.nc.paee.dominio.Experimento;
 import ifrn.nc.paee.servicos.bd.BancoDeDados;
-import ifrn.nc.paee.servicos.bd.Campo;
-import ifrn.nc.paee.servicos.bd.Experimento;
 import ifrn.nc.paee.servicos.bd.HSQLDB;
 import ifrn.nc.paee.servicos.bd.InicializacaoBDException;
 import ifrn.nc.paee.util.CarregadorDeExperimentos;
@@ -10,6 +10,10 @@ import ifrn.nc.paee.util.CarregadorDeExperimentos;
 public class Teste {
 	public static void main(String[] args) {
 
+		
+		
+		String teste = null;
+		teste.charAt(0);
 		
 		testeMecanismoBD();
 		
@@ -52,12 +56,7 @@ public class Teste {
 		Campo[] campos = { massa, temperatura };
 		experimento.setCampos(campos);
 
-		try {
-			bd.inicializacao(experimento);
-		} catch (InicializacaoBDException e) {
-			e.printStackTrace();
 
-		}
 	}
 
 	public static void testeMecanismoBD() {
@@ -70,15 +69,6 @@ public class Teste {
 
 		Campo[] campos = { massa, temperatura };
 
-		try {
-			bd.inicializacao(new Experimento("Laura DB 6", campos));
-			
-			// atualizar 
-			System.out.println(bd.guardar("Laura DB 6", new Campo("massa", "15")));
-			
-		} catch (InicializacaoBDException e) {
-			e.printStackTrace();
-
-		}
+	
 	}
 }

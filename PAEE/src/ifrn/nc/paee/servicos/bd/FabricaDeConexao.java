@@ -22,9 +22,13 @@ class FabricaDeConexao {
 		
 	}
 
-	public Connection getConnection() throws SQLException {
+	public Connection getConnection() throws ConexaoException {
 		Connection conn = null;
+		try{
 		conn = DriverManager.getConnection(url, usuario, senha);
+		}catch(SQLException sqle){
+			throw new ConexaoException("Problemas com a conexao!!!", sqle);
+		}
 		return conn;
 	}
 
@@ -35,7 +39,7 @@ class FabricaDeConexao {
 		return fabricadeconexao;
 	}
 
-	public static void main(String[] args) throws SQLException {
+	public static void main(String[] args) throws ConexaoException {
 		FabricaDeConexao.getInstance().getConnection();
 		System.out.println("Conectou!");
 	}

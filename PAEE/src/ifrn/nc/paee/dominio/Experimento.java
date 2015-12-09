@@ -78,6 +78,13 @@ public class Experimento {
 		this.classeExecutavel = classeExecutavel;
 	}
 	
-	
+	/**
+	 * Verificar se o estado/situação do experimento em questão está apto para ser inicializado.
+	 * 
+	 * @return {@code true} para apto, {@code false} caso não.
+	 */
+	public boolean aptoParaInicializacao(){
+		return false;
+	}
 	
 }

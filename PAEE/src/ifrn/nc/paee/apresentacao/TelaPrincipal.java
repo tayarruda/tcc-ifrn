@@ -1,6 +1,6 @@
 package ifrn.nc.paee.apresentacao;
 
-import ifrn.nc.paee.servicos.bd.Experimento;
+import ifrn.nc.paee.dominio.Experimento;
 import ifrn.nc.paee.util.CarregadorDeExperimentos;
 
 import java.awt.EventQueue;

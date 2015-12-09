@@ -11,9 +11,9 @@ public interface BancoDeDados {
 	 * @param experimento
 	 * @throws InicializacaoBDException
 	 */
-	public void inicializacao(Experimento experimento) throws InicializacaoBDException;
-	public boolean guardar(String nomeDoExperimento, Campo campo);
-	public Campo recuperar(String nomeDoExperimento, Campo campo);
+	public void inicializacao(Experimento experimento) throws ExperimentoValidoException, ConexaoException, InicializacaoBDException;
+	public boolean guardar(String nomeDoExperimento, Campo campo) throws ConexaoException;
+	public Campo recuperar(String nomeDoExperimento, Campo campo) throws ConexaoException;
 	public boolean termino();
 
 }

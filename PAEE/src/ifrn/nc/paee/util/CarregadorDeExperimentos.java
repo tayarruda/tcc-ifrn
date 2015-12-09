@@ -1,6 +1,6 @@
 package ifrn.nc.paee.util;
 
-import ifrn.nc.paee.servicos.bd.Experimento;
+import ifrn.nc.paee.dominio.Experimento;
 
 public class CarregadorDeExperimentos {
 
